@@ -7,4 +7,21 @@
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+
+    <!-- Primary -->
+    <color name="colorPrimaryForest">#14463D</color>
+    <color name="colorPrimaryHover">#1A594D</color>
+    <color name="colorPrimaryLight">#E6F2EF</color>
+
+    <!-- Neutral -->
+    <color name="colorNeutralWhite">#FFFFFF</color>
+    <color name="colorNeutralBlack">#111111</color>
+    <color name="colorNeutralGray">#F9FAFB</color>
+    <color name="colorNeutralBackground">#F9FAFB</color>
+
+    <!-- Accent -->
+    <color name="colorAccentGold">#D4AF37</color>
+
+    <!-- Feedback -->
+    <color name="colorFeedbackError">#DC2626</color>
 </resources>

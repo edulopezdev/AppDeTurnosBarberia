@@ -1,9 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/mobile_navigation"
-    app:startDestination="@+id/nav_home">
+    app:startDestination="@id/nav_home">
 
+    <fragment
+        android:id="@+id/nav_home"
+        android:name="com.eal.appturnosbarberia.ui.Inicio.InicioFragment"
+        android:label="Inicio"
+        tools:layout="@layout/fragment_inicio" />
+
+    <fragment
+        android:id="@+id/nav_appointments"
+        android:name="com.eal.appturnosbarberia.ui.turnos.TurnosFragment"
+        android:label="Turnos"
+        tools:layout="@layout/fragment_turnos" />
+
+    <fragment
+        android:id="@+id/nav_profile"
+        android:name="com.eal.appturnosbarberia.ui.perfil.PerfilFragment"
+        android:label="Perfil"
+        tools:layout="@layout/fragment_perfil" />
+
+    <action
+        android:id="@+id/action_logout"
+        app:destination="@id/nav_home"
+        app:popUpTo="@id/mobile_navigation"
+        app:popUpToInclusive="true" />
 
 </navigation>

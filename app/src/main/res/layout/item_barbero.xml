@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+  xmlns:android="http://schemas.android.com/apk/res/android"
+  android:id="@+id/itemBarbero"
+  android:layout_width="170dp"
+  android:layout_height="wrap_content"
+  android:orientation="vertical"
+  android:gravity="center_horizontal"
+  android:padding="8dp"
+  android:background="@android:color/transparent"
+>
+  <FrameLayout
+    android:layout_width="160dp"
+    android:layout_height="140dp"
+    android:clipChildren="false"
+    android:clipToPadding="false"
+    android:background="@android:color/transparent"
+  >
+    <ImageView
+      android:id="@+id/ivAvatarBarbero"
+      android:layout_width="120dp"
+      android:layout_height="120dp"
+      android:layout_gravity="center"
+      android:scaleType="centerCrop"
+      android:background="@drawable/avatar_circle_bg"
+      android:clipToOutline="true"
+      android:contentDescription="Avatar"
+    />
+    <ImageView
+      android:id="@+id/cbSelected"
+      android:layout_width="24dp"
+      android:layout_height="24dp"
+      android:layout_gravity="bottom|end"
+      android:layout_marginEnd="6dp"
+      android:layout_marginBottom="6dp"
+      android:src="@drawable/cb_unchecked"
+      android:contentDescription="Seleccionar"
+    />
+  </FrameLayout>
+  <TextView
+    android:id="@+id/tvNombreBarbero"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:textSize="14sp"
+    android:textStyle="bold"
+    android:layout_marginTop="8dp"
+    android:textAlignment="center"
+    android:textColor="@color/white"
+    android:background="@android:color/transparent"
+  />
+</LinearLayout>

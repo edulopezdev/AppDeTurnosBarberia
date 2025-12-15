@@ -1,41 +1,55 @@
 package com.eal.appturnosbarberia.ui.login;
 
 import android.content.Intent;
-
 import android.os.Bundle;
+
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
+
 import com.eal.appturnosbarberia.databinding.ActivityLoginBinding;
 
 public class LoginActivity extends AppCompatActivity {
 
-    private LoginViewModel viewModel;
-    private ActivityLoginBinding binding;
+  private LoginViewModel viewModel;
+  private ActivityLoginBinding binding;
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+  // Configuración inicial de la Activity
+  @Override
+  protected void onCreate(Bundle savedInstanceState) {
+    super.onCreate(savedInstanceState);
 
-        binding = ActivityLoginBinding.inflate(getLayoutInflater());
-        setContentView(binding.getRoot());
+    // Configurar View Binding
+    binding = ActivityLoginBinding.inflate(getLayoutInflater());
+    setContentView(binding.getRoot());
 
-        viewModel = ViewModelProvider.AndroidViewModelFactory
-                .getInstance(getApplication())
-                .create(LoginViewModel.class);
+    // Configurar ViewModel
+    viewModel = ViewModelProvider.AndroidViewModelFactory
+        .getInstance(getApplication())
+        .create(LoginViewModel.class);
 
-        viewModel.getErrorMutableLiveData().observe(this, new Observer<String>() {
-            @Override
-            public void onChanged(String s) {
-                binding.tvError.setText(s);
-            }
-        });
+    // Aplicar mensaje y visibilidad provistos por el VM (sin lógica en la Activity)
+    viewModel.obtenerMensajeError().observe(this, binding.tvError::setText);
+    viewModel.obtenerMensajeErrorVisibility().observe(this, binding.tvError::setVisibility);
 
-        binding.btLogin.setOnClickListener(v -> {
-            String email = binding.etEmail.getText().toString();
-            String password = binding.etPassword.getText().toString();
-            viewModel.login(email, password);
-        });
-    }
+    final android.os.Bundle[] pendingExtras = new android.os.Bundle[1];
+    viewModel.obtenerNavegarExtras().observe(this, bundle -> pendingExtras[0] = bundle);
 
+    viewModel.obtenerNavegarARegistro().observe(this, destino -> {
+      Intent intent = new Intent(LoginActivity.this, destino);
+      android.os.Bundle extras = pendingExtras[0];
+      intent.putExtras(extras);
+      intent.addFlags(extras.getInt("flags", 0));
+      pendingExtras[0] = null;
+      startActivity(intent);
+    });
+
+    // Configurar listeners de botones
+    binding.btLogin.setOnClickListener(v -> { //click iniciar sesion
+      viewModel.iniciarSesion(binding.etEmail.getText(), binding.etPassword.getText());
+    });
+
+    // Configurar listeners de botones
+    binding.btCrearCuenta.setOnClickListener(v -> viewModel.alClickCrearCuenta()); //click crear cuenta
+    binding.tvForgotPassword.setOnClickListener(v -> viewModel.alClickRecuperarContrasena(binding.etEmail.getText())); //click recuperar contraseña
+  }
 }

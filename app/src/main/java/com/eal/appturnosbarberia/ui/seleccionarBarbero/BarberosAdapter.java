@@ -31,21 +31,24 @@ public class BarberosAdapter extends RecyclerView.Adapter<BarberosAdapter.Barber
     this.listener = listener;
   }
 
-  // este metodo sirve para actualizar la lista de barberos, de modo q   cuando cambie la lista en el ViewModel, se actualice el RecyclerView
+  // este metodo sirve para actualizar la lista de barberos, de modo q cuando
+  // cambie la lista en el ViewModel, se actualice el RecyclerView
   public void setItems(List<Barbero> barberos) {
     this.barberos = barberos != null ? barberos : new ArrayList<>();
     selectedPosition = -1;
     notifyDataSetChanged();
   }
 
-  // este metodo devuelve el barbero seleccionado actualmente, o null si no hay ninguno seleccionado
+  // este metodo devuelve el barbero seleccionado actualmente, o null si no hay
+  // ninguno seleccionado
   public Barbero getSelected() {
     return selectedPosition >= 0 && selectedPosition < barberos.size()
         ? barberos.get(selectedPosition)
         : null;
   }
 
-  // este metodo crea el ViewHolder para cada item del RecyclerView, inflando el layout correspondiente
+  // este metodo crea el ViewHolder para cada item del RecyclerView, inflando el
+  // layout correspondiente
   @NonNull
   @Override
   public BarberoViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -60,18 +63,26 @@ public class BarberosAdapter extends RecyclerView.Adapter<BarberosAdapter.Barber
     holder.binding.tvNombreBarbero.setText(barbero.getNombre()); // y lo seteamos en el TextView
 
     // lo q hacemos con Glide para cargar la imagen del avatar
-    Glide.with(holder.binding.ivAvatarBarbero.getContext()).clear(holder.binding.ivAvatarBarbero); // limpiar cualquier carga previa
+    Glide.with(holder.binding.ivAvatarBarbero.getContext()).clear(holder.binding.ivAvatarBarbero); // limpiar cualquier
+                                                                                                   // carga previa
     String avatarUrl = barbero.getAvatarUrl(); // obtener la URL del avatar en caso de que exista
     Glide.with(holder.binding.ivAvatarBarbero.getContext())// le damos el contexto al Glide
-        .load(avatarUrl != null && !avatarUrl.trim().isEmpty() ? avatarUrl : R.drawable.profile) // cargar la URL o imagen por defecto
-        .placeholder(R.drawable.profile) //mostramos una imagen por defecto mientras carga
-        .error(R.drawable.profile) //si falla tenemos otra imagen por defecto
+        .load(avatarUrl != null && !avatarUrl.trim().isEmpty() ? avatarUrl : R.drawable.profile) // cargar la URL o
+                                                                                                 // imagen por defecto
+        .placeholder(R.drawable.profile) // mostramos una imagen por defecto mientras carga
+        .error(R.drawable.profile) // si falla tenemos otra imagen por defecto
         .circleCrop() // esto lo q hace es recortar la imagen en forma circular
         .into(holder.binding.ivAvatarBarbero); // por ultimo lo q hacemos es poner la imagen en el ImageView
 
-    // ahora lo q hacemos es actualizar el estado del checkbox segun si este item esta seleccionado o no
+    // ahora lo q hacemos es actualizar el estado del checkbox segun si este item
+    // esta seleccionado o no
     boolean isSelected = position == selectedPosition; // vemos si esta seleccionado, comparando posiciones
-    holder.binding.cbSelected.setImageResource(isSelected ? R.drawable.cb_checked : R.drawable.cb_unchecked); // cambiar imagen del checkbox segun estado
+    holder.binding.cbSelected.setImageResource(isSelected ? R.drawable.cb_checked : R.drawable.cb_unchecked); // cambiar
+                                                                                                              // imagen
+                                                                                                              // del
+                                                                                                              // checkbox
+                                                                                                              // segun
+                                                                                                              // estado
 
     // cambiar color de fondo segun si esta seleccionado o no
     holder.binding.cbSelected.setOnClickListener(new View.OnClickListener() {
@@ -102,7 +113,8 @@ public class BarberosAdapter extends RecyclerView.Adapter<BarberosAdapter.Barber
       }
     });
 
-    // aca evitamos q el itemView tenga su propio listener para evitar conflictos con el checkbox
+    // aca evitamos q el itemView tenga su propio listener para evitar conflictos
+    // con el checkbox
     holder.itemView.setOnClickListener(null);
   }
 
@@ -116,7 +128,8 @@ public class BarberosAdapter extends RecyclerView.Adapter<BarberosAdapter.Barber
   static class BarberoViewHolder extends RecyclerView.ViewHolder {
     final ItemBarberoBinding binding;
 
-    // este es el constructor del ViewHolder, sirve para inicializar las vistas del item
+    // este es el constructor del ViewHolder, sirve para inicializar las vistas del
+    // item
     BarberoViewHolder(ItemBarberoBinding binding) {
       super(binding.getRoot());
       this.binding = binding;

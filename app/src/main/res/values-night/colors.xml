@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <!-- Overrides para modo oscuro (mantener sólo lo necesario) -->
+  <color name="colorPrimary">#D4AF37</color>
+  <color name="colorPrimaryDark">#B8941F</color>
+  <color name="colorPrimaryForest">#102f23</color>
+  <!-- Si no hay overrides necesarios, mantener el archivo mínimo así-->
+</resources>

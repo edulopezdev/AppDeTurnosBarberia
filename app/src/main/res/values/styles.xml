@@ -1,29 +1,37 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <style name="CustomInputStyle" parent="Widget.MaterialComponents.TextInputLayout.FilledBox">
-        <item name="boxBackgroundMode">filled</item>
-        <item name="boxBackgroundColor">@android:color/transparent</item>
-        <item name="android:background">@drawable/input_background</item>
-        <item name="boxStrokeWidth">0dp</item>
-        <item name="boxStrokeColor">@android:color/transparent</item>
-    </style>
-
-    <style name="ButtonPrimary" parent="Widget.MaterialComponents.Button">
-        <item name="backgroundTint">@null</item>
-        <item name="android:background">@drawable/button_primary_background</item>
-        <item name="android:textColor">@android:color/white</item>
-        <item name="textAllCaps">true</item>
-        <item name="android:textSize">16sp</item>
-        <item name="android:minHeight">50dp</item>
-    </style>
-
-    <style name="ButtonSecondary" parent="Widget.MaterialComponents.Button">
-        <item name="backgroundTint">@null</item>
-        <item name="android:background">@drawable/button_secondary_background</item>
-        <item name="android:textColor">@android:color/white</item>
-        <item name="textAllCaps">true</item>
-        <item name="android:textSize">16sp</item>
-        <item name="android:minHeight">50dp</item>
-    </style>
-
+  <!-- Estilo para botón primario -->
+  <style name="ButtonPrimary" parent="Widget.MaterialComponents.Button">
+    <item name="android:textColor">@color/colorNeutralBlack</item>
+    <item name="backgroundTint">@color/colorPrimary</item>
+    <item name="cornerRadius">8dp</item>
+    <item name="android:textStyle">bold</item>
+    <item name="android:textAllCaps">true</item>
+  </style>
+  <!-- Estilo para botón secundario -->
+  <style name="ButtonSecondary" parent="Widget.MaterialComponents.Button.OutlinedButton">
+    <item name="android:textColor">@color/colorPrimary</item>
+    <item name="strokeColor">@color/colorPrimary</item>
+    <item name="strokeWidth">2dp</item>
+    <item name="cornerRadius">8dp</item>
+    <item name="android:textStyle">bold</item>
+    <item name="android:textAllCaps">true</item>
+  </style>
+  <!-- Normalización de recursos faltantes para item_turno.xml -->
+  <color name="darker_gray">#A9A9A9</color>
+  <drawable name="ic_calendar_today">@android:drawable/ic_menu_today</drawable>
+  <drawable name="shape_dot_separator">@android:drawable/presence_invisible</drawable>
+  <drawable name="ic_chevron_right">@android:drawable/ic_media_next</drawable>
+  <drawable name="ic_schedule">@android:drawable/ic_menu_agenda</drawable>
+  <drawable name="ic_check_circle">@android:drawable/ic_menu_save</drawable>
+  <!-- Estilo para el texto de las fechas del calendario -->
+  <style name="CalendarDateText" parent="TextAppearance.AppCompat">
+    <item name="android:textSize">14sp</item>
+    <item name="android:textColor">@color/white</item>
+  </style>
+  <!-- Estilo para los días de la semana del calendario -->
+  <style name="CalendarWeekDayText" parent="TextAppearance.AppCompat">
+    <item name="android:textSize">12sp</item>
+    <item name="android:textColor">@color/colorPrimary</item>
+  </style>
 </resources>

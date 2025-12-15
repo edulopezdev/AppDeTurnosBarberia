@@ -16,24 +16,10 @@
     <item name="colorSurface">@color/colorNeutralWhite</item>
     <item name="colorOnBackground">@color/colorNeutralBlack</item>
     <item name="colorOnSurface">@color/colorNeutralBlack</item>
-    <!-- Customize your theme here. -->
   </style>
   <style name="Theme.AppTurnosBarberia.NoActionBar">
     <item name="windowActionBar">false</item>
     <item name="windowNoTitle">true</item>
-  </style>
-  <style
-    name="Theme.AppTurnosBarberia.AppBarOverlay"
-    parent="ThemeOverlay.MaterialComponents.ActionBar"
-  >
-    <item name="android:colorBackground">@color/colorPrimary</item>
-    <item name="android:textColorPrimary">@color/colorNeutralBlack</item>
-    <item name="android:textColorSecondary">@color/colorNeutralBlack</item>
-    <item name="colorControlNormal">@color/colorNeutralBlack</item>
-  </style>
-  <style name="Theme.AppTurnosBarberia.PopupOverlay" parent="ThemeOverlay.MaterialComponents">
-    <item name="android:colorBackground">@color/colorNeutralWhite</item>
-    <item name="android:textColorPrimary">@color/colorNeutralBlack</item>
   </style>
   <style name="Theme.AppTurnosBarberia.Splash" parent="Theme.AppTurnosBarberia.NoActionBar">
     <item name="android:windowBackground">@drawable/splash_screen</item>
@@ -41,8 +27,8 @@
     <item name="android:windowFullscreen">true</item>
     <item name="android:windowDrawsSystemBarBackgrounds">true</item>
     <item name="android:statusBarColor">@color/colorNeutralWhite</item>
-    <!-- Android 12+ SplashScreen -->
+    <!-- Android 12+ SplashScreen API - sin círculo gris -->
     <item name="android:windowSplashScreenBackground">@color/colorNeutralWhite</item>
-    <item name="android:windowSplashScreenAnimatedIcon">@drawable/logo_verde_800</item>
+    <item name="android:windowSplashScreenAnimatedIcon">@drawable/logo_verde_400</item>
   </style>
 </resources>

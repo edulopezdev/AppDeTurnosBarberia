@@ -1,88 +1,153 @@
 package com.eal.appturnosbarberia;
 
+import android.app.AlertDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
-import android.view.View;
-import android.widget.TextView;
 import android.widget.ImageView;
-import android.util.Log;
+import android.widget.TextView;
 
-import com.google.android.material.navigation.NavigationView;
-import com.google.android.material.snackbar.Snackbar;
-
+import androidx.activity.OnBackPressedCallback;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
+import com.bumptech.glide.Glide;
 import com.eal.appturnosbarberia.databinding.ActivityMainBinding;
-import com.squareup.picasso.Picasso;
+import com.google.android.material.navigation.NavigationView;
 
 public class MainActivity extends AppCompatActivity {
 
-    private AppBarConfiguration mAppBarConfiguration;
-    private ActivityMainBinding binding;
-    private MainActivityViewModel mViewModel;
+  private ActivityMainBinding binding;
+  private AppBarConfiguration appBarConfiguration;
+  private MainActivityViewModel viewModel;
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+  @Override
+  protected void onCreate(Bundle savedInstanceState) {
+    super.onCreate(savedInstanceState);
 
-        binding = ActivityMainBinding.inflate(getLayoutInflater());
-        setContentView(binding.getRoot());
+    // Binding
+    binding = ActivityMainBinding.inflate(getLayoutInflater());
+    setContentView(binding.getRoot());
 
-        setSupportActionBar(binding.appBarMain.toolbar);
+    // ViewModel
+    viewModel = new ViewModelProvider(this)
+        .get(MainActivityViewModel.class);
 
-        DrawerLayout drawer = binding.drawerLayout;
-        NavigationView navigationView = binding.navView;
+    // Toolbar
+    setSupportActionBar(binding.appBarMain.toolbar);
 
-        mAppBarConfiguration = new AppBarConfiguration.Builder(
-                R.id.nav_home, R.id.nav_appointments, R.id.nav_profile, R.id.nav_logout)
-                .setOpenableLayout(drawer)
-                .build();
-        NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_main);
-        NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
-        NavigationUI.setupWithNavController(navigationView, navController);
+    // Navigation
+    appBarConfiguration = new AppBarConfiguration.Builder(
+        R.id.nav_home,
+        R.id.nav_appointments,
+        R.id.nav_profile,
+        R.id.nav_logout).setOpenableLayout(binding.drawerLayout)
+        .build();
 
-        // Inicializar el ViewModel
-        mViewModel = new ViewModelProvider(this).get(MainActivityViewModel.class);
+    NavController navController = Navigation.findNavController(
+        this,
+        R.id.nav_host_fragment_content_main);
 
-        // Configurar el header del Navigation Drawer
-        View headerView = navigationView.getHeaderView(0);
-        TextView tvNombreUsuario = headerView.findViewById(R.id.tvNombreUsuario);
-        TextView tvEmailUsuario = headerView.findViewById(R.id.tvEmailUsuario);
-        ImageView ivAvatar = headerView.findViewById(R.id.imageView);
+    NavigationUI.setupActionBarWithNavController(
+        this,
+        navController,
+        appBarConfiguration);
 
-        // Observar los datos del usuario y actualizar el sidebar
-        mViewModel.getUsuarioData().observe(this, usuario -> {
-            if (usuario != null) {
-                Log.d("DatosUsuario", "MainActivity observa usuario: " + usuario.getNombre() + " - " + usuario.getEmail());
-                String nombreCompleto = usuario.getNombre();
-                tvNombreUsuario.setText(nombreCompleto);
-                tvEmailUsuario.setText(usuario.getEmail());
-            } else {
-                Log.d("DatosUsuario", "MainActivity observa usuario: null");
-            }
+    NavigationUI.setupWithNavController(
+        binding.navView,
+        navController);
+
+    // Menú
+    binding.navView.setNavigationItemSelectedListener(item -> {
+      binding.drawerLayout.closeDrawers();
+      viewModel.manejarSeleccionMenu(item.getItemId());
+      return false;
+    });
+
+    // Header
+    NavigationView navView = binding.navView;
+    var header = navView.getHeaderView(0);
+
+    TextView tvNombre = header.findViewById(R.id.tvNombreUsuario);
+    TextView tvEmail = header.findViewById(R.id.tvEmailUsuario);
+    ImageView ivAvatarHeader = header.findViewById(R.id.ivAvatarHeader);
+
+    // Observers
+    viewModel.getNombreUsuario().observe(this, texto -> {
+      tvNombre.setText(texto);
+    });
+
+    viewModel.getEmailUsuario().observe(this, texto -> {
+      tvEmail.setText(texto);
+    });
+
+    viewModel.getAvatarUrl().observe(this, avatarUrl -> {
+      if (avatarUrl != null && !avatarUrl.isEmpty()) {
+        Glide.with(this)
+            .load(avatarUrl)
+            .circleCrop()
+            .placeholder(R.drawable.profile)
+            .into(ivAvatarHeader);
+      }
+    });
+
+    viewModel.getEventoResetMenu().observe(this, evento -> {
+      binding.navView.setCheckedItem(R.id.nav_home);
+    });
+
+    viewModel.getEventoNavegar().observe(this, destinoId -> {
+      NavigationUI.onNavDestinationSelected(binding.navView.getMenu().findItem(destinoId), navController);
+    });
+
+    viewModel.getSolicitudDialogo().observe(this, dialogo -> {
+      new AlertDialog.Builder(this)
+          .setTitle(dialogo.getTitle())
+          .setMessage(dialogo.getMessage())
+          .setPositiveButton(dialogo.getPositiveLabel(), (d, w) -> {
+            d.dismiss();
+            viewModel.cerrarSesion();
+          })
+          .setNegativeButton(dialogo.getNegativeLabel(), (d, w) -> {
+            d.dismiss();
+            viewModel.cancelarCerrarSesion();
+          })
+          .setOnDismissListener(d -> {
+            viewModel.limpiarSolicitudDialogo();
+            viewModel.cancelarCerrarSesion(); // Asegurar que se deseleccione el menú
+          })
+          .show();
+    });
+
+    viewModel.getEventoNavegarLogin()
+        .observe(this, destino -> {
+          Intent i = new Intent(this, destino);
+          i.setFlags(
+              Intent.FLAG_ACTIVITY_NEW_TASK |
+                  Intent.FLAG_ACTIVITY_CLEAR_TASK);
+          startActivity(i);
         });
 
-        // Solicitar los datos del usuario
-        Log.d("MainActivity", "Solicitando datos del usuario...");
-        mViewModel.obtenerDatosUsuario();
-    }
+    // Datos
+    viewModel.obtenerDatosUsuario();
+  }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.main, menu);
-        return true;
-    }
+  @Override
+  public boolean onCreateOptionsMenu(Menu menu) {
+    getMenuInflater().inflate(R.menu.main, menu);
+    return true;
+  }
 
-    @Override
-    public boolean onSupportNavigateUp() {
-        NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_main);
-        return NavigationUI.navigateUp(navController, mAppBarConfiguration)
-                || super.onSupportNavigateUp();
-    }
+  @Override
+  public boolean onSupportNavigateUp() {
+    NavController navController = Navigation.findNavController(
+        this,
+        R.id.nav_host_fragment_content_main);
+    return NavigationUI.navigateUp(
+        navController,
+        appBarConfiguration);
+  }
 }

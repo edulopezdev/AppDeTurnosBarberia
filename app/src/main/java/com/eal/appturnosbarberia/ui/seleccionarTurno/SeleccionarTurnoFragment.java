@@ -118,7 +118,7 @@ public class SeleccionarTurnoFragment extends Fragment {
     mViewModel.getGoToAppointments().observe(getViewLifecycleOwner(), new Observer<Boolean>() {
       @Override
       public void onChanged(Boolean shouldNavigate) {
-        if (Boolean.TRUE.equals(shouldNavigate)) {
+        if (shouldNavigate) { // Sin chequeo de nulos explícito
           Navigation.findNavController(requireView()).navigate(R.id.nav_appointments);
           mViewModel.doneNavigating();
         }

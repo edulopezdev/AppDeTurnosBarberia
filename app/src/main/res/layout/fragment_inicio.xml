@@ -1,13 +1,293 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<ScrollView
+  xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:app="http://schemas.android.com/apk/res-auto"
+  xmlns:tools="http://schemas.android.com/tools"
+  android:layout_width="match_parent"
+  android:layout_height="match_parent"
+  android:background="@drawable/background_gradient"
+>
+  <FrameLayout
+    android:id="@+id/dashboardContainer"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".ui.Inicio.InicioFragment">
-
-    <TextView
+    android:layout_height="wrap_content"
+  >
+    <LinearLayout
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:orientation="vertical"
+      android:padding="16dp"
+    >
+      <!-- Saludo principal -->
+      <TextView
+        android:id="@+id/tvWelcomeInicio"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="Hello" />
-
-</FrameLayout>
+        android:layout_height="wrap_content"
+        android:text="¡Hola!"
+        android:textSize="26sp"
+        android:textStyle="bold"
+        android:textColor="@color/white"
+        android:layout_marginBottom="16dp"
+        android:gravity="center"
+        android:textAlignment="center"
+      />
+      <!-- CARD: Próximo Turno -->
+      <androidx.cardview.widget.CardView
+        android:id="@+id/cardProximoTurno"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:cardCornerRadius="16dp"
+        app:cardElevation="8dp"
+        app:cardBackgroundColor="@color/colorPrimary"
+        android:layout_marginBottom="20dp"
+        android:visibility="gone"
+        tools:visibility="visible"
+      >
+        <LinearLayout
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:orientation="vertical"
+          android:padding="12dp"
+        >
+          <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="📅 Próximo Turno"
+            android:textColor="@color/colorNeutralBlack"
+            android:textSize="12sp"
+            android:textStyle="bold"
+            android:layout_marginBottom="4dp"
+            tools:text="📅 Próximo Turno"
+          />
+          <TextView
+            android:id="@+id/tvNextTurnoTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Viernes 15 de diciembre a las 10:00h"
+            android:textColor="@color/colorNeutralBlack"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:layout_marginBottom="10dp"
+            tools:text="Viernes 15 de diciembre a las 10:00h"
+          />
+          <!-- Estado y Barbero en la misma línea -->
+          <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:layout_marginTop="4dp"
+          >
+            <!-- Estado -->
+            <LinearLayout
+              android:layout_width="0dp"
+              android:layout_height="wrap_content"
+              android:layout_weight="1"
+              android:orientation="horizontal"
+              android:gravity="center_vertical"
+            >
+              <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Estado:"
+                android:textColor="@color/colorNeutralBlack"
+                android:textSize="11sp"
+                android:layout_marginEnd="6dp"
+              />
+              <com.google.android.material.chip.Chip
+                android:id="@+id/chipEstado"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Confirmado"
+                android:textColor="@color/white"
+                android:textSize="10sp"
+                app:chipBackgroundColor="@color/colorPrimaryForest"
+                app:chipCornerRadius="6dp"
+                app:chipMinHeight="28dp"
+                tools:text="Confirmado"
+              />
+            </LinearLayout>
+            <!-- Barbero -->
+            <LinearLayout
+              android:layout_width="0dp"
+              android:layout_height="wrap_content"
+              android:layout_weight="1"
+              android:orientation="horizontal"
+              android:gravity="center_vertical"
+              android:layout_marginStart="8dp"
+            >
+              <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="✂️"
+                android:textSize="13sp"
+                android:layout_marginEnd="4dp"
+              />
+              <TextView
+                android:id="@+id/tvNextTurnoBarbero"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Emanuel Cabrera"
+                android:textColor="@color/colorNeutralBlack"
+                android:textSize="11sp"
+                android:ellipsize="end"
+                android:maxLines="1"
+                tools:text="Emanuel Cabrera"
+              />
+            </LinearLayout>
+          </LinearLayout>
+        </LinearLayout>
+      </androidx.cardview.widget.CardView>
+      <!-- CARD: Sin Turno -->
+      <androidx.cardview.widget.CardView
+        android:id="@+id/cardSinTurno"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:cardCornerRadius="16dp"
+        app:cardElevation="8dp"
+        app:cardBackgroundColor="#1C4A3B"
+        android:layout_marginBottom="20dp"
+        android:visibility="visible"
+        tools:visibility="gone"
+      >
+        <LinearLayout
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:orientation="vertical"
+          android:padding="16dp"
+          android:gravity="center"
+        >
+          <TextView
+            android:id="@+id/tvSinTurno"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="No tenés próximo turno\n\nDirígete al menú TURNOS\npara agendar uno"
+            android:textColor="@color/colorPrimary"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:textAlignment="center"
+            android:layout_marginBottom="12dp"
+            android:lineSpacingExtra="4dp"
+          />
+        </LinearLayout>
+      </androidx.cardview.widget.CardView>
+      <!-- Título: Servicios -->
+      <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="✂️ Servicios disponibles"
+        android:textColor="@color/white"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        android:layout_marginBottom="12dp"
+        android:gravity="center"
+        android:textAlignment="center"
+      />
+      <!-- Galería horizontal de servicios -->
+      <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvServicios"
+        android:layout_width="match_parent"
+        android:layout_height="140dp"
+        android:clipToPadding="false"
+        android:paddingStart="8dp"
+        android:paddingEnd="8dp"
+        android:layout_marginBottom="20dp"
+        android:orientation="horizontal"
+      />
+      <!-- Separador visual -->
+      <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#33FFFFFF"
+        android:layout_marginVertical="16dp"
+      />
+      <!-- NUEVO DISEÑO: Información de la barbería -->
+      <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="24dp"
+        app:cardCornerRadius="16dp"
+        app:cardElevation="2dp"
+        app:cardBackgroundColor="@color/colorPrimaryForest"
+      >
+        <LinearLayout
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:orientation="vertical"
+          android:padding="20dp"
+        >
+          <!-- Encabezado con icono -->
+          <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center"
+            android:layout_marginBottom="16dp"
+          >
+            <TextView
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:layout_marginStart="12dp"
+              android:text="¿Donde estamos?"
+              android:textColor="@color/colorPrimary"
+              android:textSize="14sp"
+              android:textStyle="bold"
+            />
+          </LinearLayout>
+          <TextView
+            android:id="@+id/tvBarberiaNombre"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Forest Barber Shop"
+            android:textColor="@color/white"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:layout_marginBottom="12dp"
+            android:gravity="center"
+            android:textAlignment="center"
+          />
+          <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:layout_marginBottom="16dp"
+            android:background="@drawable/rounded_background_light"
+            android:padding="12dp"
+          >
+            <ImageView
+              android:layout_width="20dp"
+              android:layout_height="20dp"
+              android:src="@android:drawable/ic_menu_mylocation"
+              android:contentDescription="@null"
+              app:tint="@color/colorPrimaryForest"
+            />
+            <TextView
+              android:id="@+id/tvBarberiaDireccion"
+              android:layout_width="0dp"
+              android:layout_height="wrap_content"
+              android:layout_weight="1"
+              android:text="Pringles 123, Villa Mercedes, San Luis"
+              android:textColor="@color/colorPrimaryForest"
+              android:textSize="14sp"
+              android:layout_marginStart="10dp"
+              android:textStyle="bold"
+            />
+          </LinearLayout>
+          <com.google.android.material.button.MaterialButton
+            android:id="@+id/btComoLlegar"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:text="📍 Cómo llegar"
+            android:textSize="14sp"
+            android:textColor="@color/colorPrimaryForest"
+            app:backgroundTint="@color/colorPrimary"
+            app:cornerRadius="8dp"
+            android:textStyle="bold"
+          />
+        </LinearLayout>
+      </androidx.cardview.widget.CardView>
+    </LinearLayout>
+  </FrameLayout>
+</ScrollView>

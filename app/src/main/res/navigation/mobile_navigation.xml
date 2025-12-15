@@ -1,32 +1,82 @@
 <?xml version="1.0" encoding="utf-8"?>
-<navigation xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/mobile_navigation"
-    app:startDestination="@id/nav_home">
-
-    <fragment
-        android:id="@+id/nav_home"
-        android:name="com.eal.appturnosbarberia.ui.Inicio.InicioFragment"
-        android:label="Inicio"
-        tools:layout="@layout/fragment_inicio" />
-
-    <fragment
-        android:id="@+id/nav_appointments"
-        android:name="com.eal.appturnosbarberia.ui.turnos.TurnosFragment"
-        android:label="Turnos"
-        tools:layout="@layout/fragment_turnos" />
-
-    <fragment
-        android:id="@+id/nav_profile"
-        android:name="com.eal.appturnosbarberia.ui.perfil.PerfilFragment"
-        android:label="Perfil"
-        tools:layout="@layout/fragment_perfil" />
-
+<navigation
+  xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:tools="http://schemas.android.com/tools"
+  xmlns:app="http://schemas.android.com/apk/res-auto"
+  android:id="@+id/mobile_navigation"
+  app:startDestination="@id/nav_home"
+>
+  <fragment
+    android:id="@+id/nav_home"
+    android:name="com.eal.appturnosbarberia.ui.Inicio.InicioFragment"
+    android:label="Inicio"
+    tools:layout="@layout/fragment_inicio"
+  />
+  <fragment
+    android:id="@+id/nav_appointments"
+    android:name="com.eal.appturnosbarberia.ui.turnos.TurnosFragment"
+    android:label="Mis Turnos"
+    tools:layout="@layout/fragment_turnos"
+  >
     <action
-        android:id="@+id/action_logout"
-        app:destination="@id/nav_home"
-        app:popUpTo="@id/mobile_navigation"
-        app:popUpToInclusive="true" />
-
+      android:id="@+id/action_nav_appointments_to_seleccionarBarbero"
+      app:destination="@id/seleccionarBarberoFragment"
+    />
+  </fragment>
+  <fragment
+    android:id="@+id/nav_profile"
+    android:name="com.eal.appturnosbarberia.ui.perfil.PerfilFragment"
+    android:label="Perfil"
+    tools:layout="@layout/fragment_perfil"
+  />
+  <fragment
+    android:id="@+id/nav_logout"
+    android:name="com.eal.appturnosbarberia.ui.logout.LogoutFragment"
+    android:label="Logout"
+    tools:layout="@layout/fragment_logout"
+  />
+  <fragment
+    android:id="@+id/seleccionarBarberoFragment"
+    android:name="com.eal.appturnosbarberia.ui.seleccionarBarbero.SeleccionarBarberoFragment"
+    android:label="Seleccionar Barbero"
+    tools:layout="@layout/fragment_seleccionar_barbero"
+  >
+    <action
+      android:id="@+id/action_seleccionarBarbero_to_seleccionarTurno"
+      app:destination="@id/seleccionarTurnoFragment"
+    />
+  </fragment>
+  <fragment
+    android:id="@+id/seleccionarTurnoFragment"
+    android:name="com.eal.appturnosbarberia.ui.seleccionarTurno.SeleccionarTurnoFragment"
+    android:label="Seleccionar Horario"
+    tools:layout="@layout/fragment_seleccionar_turno"
+  >
+    <argument android:name="barberoId" app:argType="integer" android:defaultValue="-1" />
+    <argument android:name="barberoNombre" app:argType="string" app:nullable="true" />
+    <action
+      android:id="@+id/action_seleccionarTurno_to_nav_appointments"
+      app:destination="@id/nav_appointments"
+      app:popUpTo="@id/nav_appointments"
+      app:popUpToInclusive="true"
+    />
+  </fragment>
+  <activity
+      android:id="@+id/loginActivity"
+      android:name="com.eal.appturnosbarberia.ui.login.LoginActivity"
+      android:label="activity_login"
+      tools:layout="@layout/activity_login" />
+  <fragment
+      android:id="@+id/verificacionFragment"
+      android:name="com.eal.appturnosbarberia.ui.verificacion.VerificacionFragment"
+      android:label="VerificacionFragment" />
+  <activity
+      android:id="@+id/registerActivity"
+      android:name="com.eal.appturnosbarberia.ui.register.RegisterActivity"
+      android:label="RegisterActivity" />
+  <activity
+      android:id="@+id/mainActivity"
+      android:name="com.eal.appturnosbarberia.MainActivity"
+      android:label="app_bar_main"
+      tools:layout="@layout/app_bar_main" />
 </navigation>
